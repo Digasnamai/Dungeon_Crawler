@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://7vucpqyw88nf"]
+
+[ext_resource type="Script" uid="uid://dt4kc6ujwgd7h" path="res://dungeon_generation.gd" id="1_0px8g"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="2_ji62q"]
+[ext_resource type="Shader" uid="uid://dq5saml1h5d67" path="res://shader/new_shader.gdshader" id="2_o1x57"]
+[ext_resource type="PackedScene" uid="uid://3wy0582mdrlx" path="res://transition_screen.tscn" id="3_0v17y"]
+[ext_resource type="Texture2D" uid="uid://c2duu67t2n06s" path="res://shader/fading-16-1x.png" id="3_o1x57"]
+[ext_resource type="FontFile" uid="uid://cbxe8fcb0kgk6" path="res://WebPlus_IBM_BIOS.woff" id="6_oyrm0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1d6v1"]
+shader = ExtResource("2_o1x57")
+shader_parameter/shader_enabled = true
+shader_parameter/palette = ExtResource("3_o1x57")
+shader_parameter/dithering = true
+shader_parameter/dithering_size = 2
+shader_parameter/resolution_scale = 2
+shader_parameter/quantization_level = 16
+
+[node name="Node" type="Node3D"]
+script = ExtResource("1_0px8g")
+
+[node name="rooms" type="Node3D" parent="."]
+
+[node name="SubViewportContainer (shader)" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_1d6v1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer (shader)"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ProtoController" parent="SubViewportContainer (shader)/SubViewport" instance=ExtResource("2_ji62q")]
+
+[node name="Cam1" type="Camera3D" parent="SubViewportContainer (shader)/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 18, 51.068, 18)
+
+[node name="TransitionScreen" parent="." instance=ExtResource("3_0v17y")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 15.0
+offset_right = 53.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("6_oyrm0")

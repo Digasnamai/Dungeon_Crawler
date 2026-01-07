@@ -1,0 +1,4 @@
+[gd_scene load_steps=0 format=3 uid="uid://b23ctu8u7ud2"]
+
+[node name="CSGBox3D" type="CSGBox3D"]
+size = Vector3(1, 3, 5)
